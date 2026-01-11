@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-          content="Personal website, blog and portfolio of Mehroj Saparov, Backend Developer">
+          content="Personal website, blog and portfolio of Mehroj Saparov">
 
     <title>{% block title %}Mehroj Saparov{% endblock %}</title>
 
@@ -52,7 +52,6 @@
             font-family: 'Work Sans', sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
-            transition: background-color 0.3s, color 0.3s;
         }
 
         .font-display {
@@ -60,6 +59,8 @@
         }
 
         .skill-tag {
+            display: inline-flex;
+            align-items: center;
             background: #eef0f1;
             color: #334155;
             transition: all 0.2s ease;
@@ -70,6 +71,21 @@
             background: #2563eb;
             color: #ffffff;
         }
+
+        .card-hover {
+            transition: all 0.25s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-2px);
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+
+        .card-hover:hover p {
+            color: #e0e7ff;
+        }
+
     </style>
 </head>
 
@@ -84,8 +100,9 @@
 
             <!-- Logo -->
             <a href="{% url 'home' %}" class="font-display text-xl font-bold">
-                Mehroj.dev
+                Mehroj<span class="text-[var(--accent)]">.</span>
             </a>
+
 
             <!-- Desktop nav -->
             <nav class="hidden md:flex items-center gap-6 text-[var(--text-muted)]">
@@ -96,16 +113,15 @@
                 <a href="{% url 'projects' %}" class="hover:text-[var(--accent)]">Projects</a>
                 <a href="{% url 'contact' %}" class="hover:text-[var(--accent)]">Contact</a>
 
-                <!-- Theme toggle -->
                 <button @click="toggleTheme"
-                        class="ml-2 p-2 rounded-lg border hover:bg-[var(--bg-soft)] transition"
+                        class="ml-2 p-2 rounded-lg border"
                         style="border-color: var(--border);">
                     <span x-show="!dark">🌙</span>
                     <span x-show="dark">☀️</span>
                 </button>
             </nav>
 
-            <!-- Mobile buttons -->
+            <!-- Mobile -->
             <div class="md:hidden flex items-center gap-3">
                 <button @click="toggleTheme"
                         class="p-2 rounded-lg border"
@@ -128,19 +144,17 @@
     </div>
 
     <!-- Mobile menu -->
-    <div x-show="open"
-         x-transition
-         @click.outside="open=false"
+    <div x-show="open" x-transition @click.outside="open=false"
          class="md:hidden border-t"
          style="background-color: var(--bg-soft); border-color: var(--border);">
 
         <nav class="flex flex-col px-4 py-4 space-y-3 text-[var(--text-muted)]">
-            <a href="{% url 'home' %}" @click="open=false">Home</a>
-            <a href="{% url 'about' %}" @click="open=false">About</a>
-            <a href="{% url 'blog' %}" @click="open=false">Blog</a>
-            <a href="{% url 'lectures' %}" @click="open=false">Lectures</a>
-            <a href="{% url 'projects' %}" @click="open=false">Projects</a>
-            <a href="{% url 'contact' %}" @click="open=false">Contact</a>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'blog' %}">Blog</a>
+            <a href="{% url 'lectures' %}">Lectures</a>
+            <a href="{% url 'projects' %}">Projects</a>
+            <a href="{% url 'contact' %}">Contact</a>
         </nav>
     </div>
 </header>
@@ -151,6 +165,7 @@
 </main>
 
 <!-- FOOTER -->
+<!-- FOOTER -->
 <footer class="mt-20 border-t"
         style="background-color: var(--bg-soft); border-color: var(--border);">
 
@@ -158,26 +173,53 @@
                 flex flex-col gap-6
                 md:flex-row md:items-center md:justify-between">
 
+        <!-- LEFT -->
         <div class="text-center md:text-left">
             <h3 class="font-display text-lg mb-2">
                 Mehroj Saparov
             </h3>
             <p class="text-sm text-[var(--text-muted)] max-w-md mx-auto md:mx-0">
-                Backend Developer. Writing about Python, backend systems and clean architecture.
+                Backend developer sharing thoughts on software, learning, and personal growth.
             </p>
         </div>
 
-        <div class="flex justify-center md:justify-end gap-5 text-[var(--text-muted)]">
-            <a href="https://github.com/mehroj-saparov-io"
+        <!-- RIGHT LINKS -->
+        <div class="flex justify-center md:justify-end gap-6 text-sm text-[var(--text-muted)]">
+
+            {% if contact.github %}
+            <a href="{{ contact.github }}"
                target="_blank"
-               class="hover:text-[var(--accent)]">GitHub</a>
-            <a href="#" class="hover:text-[var(--accent)]">LinkedIn</a>
-            <a href="#" class="hover:text-[var(--accent)]">Twitter</a>
+               class="hover:text-[var(--accent)] transition">
+                GitHub
+            </a>
+            {% endif %}
+
+            {% if contact.linkedin %}
+            <a href="{{ contact.linkedin }}"
+               target="_blank"
+               class="hover:text-[var(--accent)] transition">
+                LinkedIn
+            </a>
+            {% endif %}
+
+            {% if contact.email %}
+            <a href="mailto:{{ contact.email }}"
+               class="hover:text-[var(--accent)] transition">
+                Email
+            </a>
+            {% elif contact.telegram %}
+            <a href="{{ contact.telegram }}"
+               target="_blank"
+               class="hover:text-[var(--accent)] transition">
+                Telegram
+            </a>
+            {% endif %}
+
         </div>
     </div>
 
     <div class="text-center text-sm text-[var(--text-muted)] pb-6">
-        © 2026 Mehroj Saparov
+        © {% now "Y" %} Mehroj Saparov
     </div>
 </footer>
 

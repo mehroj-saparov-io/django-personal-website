@@ -6,35 +6,55 @@
 <section class="space-y-10">
 
     <!-- HEADER -->
-    <header>
-        <h1 class="font-display text-4xl mb-2">Lectures</h1>
+    <header class="space-y-4">
+        <h1 class="font-display text-4xl">Lectures</h1>
 
-        <div class="flex flex-wrap gap-4 text-sm text-[var(--text-muted)] mt-4">
+        <div class="flex flex-wrap items-center gap-4 text-sm text-[var(--text-muted)]">
+
+            <!-- ALL -->
             <a href="{% url 'lectures' %}"
-               class="{% if not current_category %}text-[var(--accent)]{% endif %}">
+               class="{% if not current_category %}text-[var(--accent)] font-medium{% endif %}">
                 {{ total_count }} Lectures
             </a>
 
+            <!-- TOP CATEGORIES -->
             {% for name, count in top_categories %}
                 <a href="?category={{ name }}"
-                   class="{% if current_category == name %}text-[var(--accent)]{% endif %}">
+                   class="{% if current_category == name %}text-[var(--accent)] font-medium{% endif %}">
                     {{ count }} {{ name }}
                 </a>
             {% endfor %}
 
+            <!-- OTHERS -->
             {% if other_categories %}
-            <details>
-                <summary class="cursor-pointer">Others</summary>
-                <div class="flex flex-col mt-2 gap-2">
-                    {% for name, count in other_categories %}
-                        <a href="?category={{ name }}">
-                            {{ count }} {{ name }}
-                        </a>
-                    {% endfor %}
-                </div>
-            </details>
+            <button
+                onclick="toggleOthers()"
+                class="hover:text-[var(--accent)] transition">
+                Others
+            </button>
             {% endif %}
         </div>
+
+        <!-- OTHER CATEGORIES PANEL -->
+        {% if other_categories %}
+        <div id="otherCategories"
+             class="hidden mt-4 p-4 border rounded-xl
+                    bg-[var(--bg-soft)]
+                    grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {% for name, count in other_categories %}
+                <a href="?category={{ name }}"
+                   class="px-4 py-2 text-sm rounded-lg text-center
+                          border hover:border-[var(--accent)]
+                          {% if current_category == name %}
+                          border-[var(--accent)] text-[var(--accent)]
+                          {% endif %}
+                          transition">
+                    {{ name }}
+                    <span class="text-xs text-[var(--text-muted)]">({{ count }})</span>
+                </a>
+            {% endfor %}
+        </div>
+        {% endif %}
     </header>
 
     <!-- GRID -->
@@ -62,13 +82,20 @@
             </button>
 
             <!-- INFO -->
-            <div class="p-4">
-                <h3 class="font-medium mb-1">
+            <div class="p-4 space-y-2">
+                <h3 class="font-medium">
                     {{ lecture.id }}. {{ lecture.title }}
                 </h3>
-                <p class="text-xs text-[var(--text-muted)]">
-                    {{ lecture.category }}
-                </p>
+
+                <!-- CATEGORY BADGES -->
+                <div class="flex flex-wrap gap-2">
+                    {% for cat in lecture.category %}
+                        <span class="px-2 py-1 text-xs rounded-md"
+                              style="background-color: var(--border);">
+                            {{ cat }}
+                        </span>
+                    {% endfor %}
+                </div>
             </div>
 
         </div>
@@ -78,6 +105,7 @@
 
     <!-- PAGINATION -->
     <div class="flex justify-center items-center gap-4 pt-8 text-sm">
+
         {% if page_obj.has_previous %}
             <a href="?page={{ page_obj.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}">
                 ← Back
@@ -133,6 +161,11 @@
 
 <!-- ================= SCRIPT ================= -->
 <script>
+function toggleOthers() {
+    const el = document.getElementById("otherCategories");
+    el.classList.toggle("hidden");
+}
+
 function openVideo(videoId) {
     const modal = document.getElementById('videoModal');
     const link = document.getElementById('youtubeLink');

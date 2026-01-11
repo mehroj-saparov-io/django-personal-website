@@ -2,7 +2,6 @@
 {% block title %}{{ blog.title }} – Mehroj Saparov{% endblock %}
 
 {% block content %}
-
 <article class="space-y-6">
 
     <a href="{% url 'blog' %}" class="text-sm text-[var(--accent)]">
@@ -17,15 +16,9 @@
         {{ blog.published_date }} · {{ blog.reading_time }}
     </p>
 
-    <div class="border rounded-xl p-6"
-         style="border-color: var(--border); background-color: var(--bg-soft);">
-
-        <p class="leading-relaxed text-[var(--text-muted)]">
-            {{ blog.excerpt }}
-        </p>
-
+    <div class="prose max-w-none">
+        {{ blog_content|safe }}
     </div>
 
 </article>
-
 {% endblock %}

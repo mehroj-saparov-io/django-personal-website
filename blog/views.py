@@ -1,46 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator
-from django.core.cache import cache
 
-import requests
-import json
-
-# =====================================================
-# GITHUB DATA LOADER (GitHub = Mini CMS)
-# =====================================================
-
-GITHUB_BASE_URL = "https://raw.githubusercontent.com/mehroj-saparov-io/data/main"
-CACHE_TIMEOUT = 300  # 5 minutes
-
-
-def load_github_txt(filename: str):
-    """
-    GitHub raw txt (JSON format) faylni o‘qib Python list/dict qaytaradi
-    """
-    url = f"{GITHUB_BASE_URL}/{filename}"
-
-    try:
-        response = requests.get(url, timeout=5)
-        response.raise_for_status()
-        return json.loads(response.text)
-    except Exception as e:
-        print(f"[GitHub load error] {filename} -> {e}")
-        return []
-
-
-def get_data(filename: str):
-    """
-    Cache bilan GitHub data olish
-    """
-    cache_key = f"github_data_{filename}"
-    data = cache.get(cache_key)
-
-    if data is None:
-        data = load_github_txt(filename)
-        cache.set(cache_key, data, CACHE_TIMEOUT)
-
-    return data
+from core.services.github import get_data, load_github_html
 
 
 # =====================================================
@@ -48,11 +10,7 @@ def get_data(filename: str):
 # =====================================================
 
 def home_view(request: HttpRequest) -> HttpResponse:
-    skills = [
-        "Python", "Django", "FastAPI",
-        "PostgreSQL", "Redis", "Docker",
-        "Git", "Linux", "REST"
-    ]
+    skills = get_data("skills.txt")
 
     blogs = get_data("blogs.txt")
     latest_blogs = blogs[:3]
@@ -64,7 +22,7 @@ def home_view(request: HttpRequest) -> HttpResponse:
 
 
 # =====================================================
-# BLOG LIST (Pagination)
+# BLOG LIST
 # =====================================================
 
 def blog_view(request: HttpRequest) -> HttpResponse:
@@ -83,7 +41,7 @@ def blog_view(request: HttpRequest) -> HttpResponse:
 # BLOG DETAIL
 # =====================================================
 
-def blog_detail_view(request, slug):
+def blog_detail_view(request: HttpRequest, slug: str) -> HttpResponse:
     blogs = get_data("blogs.txt")
 
     blog = next(
@@ -94,10 +52,16 @@ def blog_detail_view(request, slug):
     if not blog:
         return HttpResponse("Blog not found", status=404)
 
-    return render(request, "blog_detail.html", {
-        "blog": blog
-    })
+    blog_content = ""
+    if blog.get("content"):
+        blog_content = load_github_html(
+            f"blogs/{blog['content']}"
+        )
 
+    return render(request, "blog_detail.html", {
+        "blog": blog,
+        "blog_content": blog_content
+    })
 
 
 # =====================================================
@@ -105,11 +69,7 @@ def blog_detail_view(request, slug):
 # =====================================================
 
 def about_view(request: HttpRequest) -> HttpResponse:
-    skills = [
-        "Python", "Django", "FastAPI",
-        "PostgreSQL", "Redis",
-        "Docker", "Git", "Linux", "REST APIs"
-    ]
+    skills = get_data("skills.txt")
 
     return render(request, "about.html", {
         "skills": skills
@@ -129,29 +89,33 @@ def projects_view(request: HttpRequest) -> HttpResponse:
 
 
 # =====================================================
-# LECTURES (Filter + Pagination)
+# LECTURES
 # =====================================================
 
 def lectures_view(request: HttpRequest) -> HttpResponse:
-    lectures = get_data("lectures.txt")
+    all_lectures = get_data("lectures.txt")
     category = request.GET.get("category")
 
-    filtered_lectures = lectures
+    # ---------- FILTER ----------
+    lectures = all_lectures
     if category:
-        filtered_lectures = [
-            l for l in lectures
-            if l.get("category", "").lower() == category.lower()
+        lectures = [
+            l for l in all_lectures
+            if category.lower() in [
+                c.lower() for c in l.get("category", [])
+            ]
         ]
 
-    paginator = Paginator(filtered_lectures, 6)
+    # ---------- PAGINATION ----------
+    paginator = Paginator(lectures, 6)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    # Category counts
+    # ---------- CATEGORY COUNTS ----------
     categories = {}
-    for lecture in lectures:
-        cat = lecture.get("category", "Other")
-        categories[cat] = categories.get(cat, 0) + 1
+    for lecture in all_lectures:
+        for cat in lecture.get("category", []):
+            categories[cat] = categories.get(cat, 0) + 1
 
     sorted_categories = sorted(
         categories.items(),
@@ -162,15 +126,13 @@ def lectures_view(request: HttpRequest) -> HttpResponse:
     top_categories = sorted_categories[:2]
     other_categories = sorted_categories[2:]
 
-    context = {
+    return render(request, "lectures.html", {
         "page_obj": page_obj,
-        "total_count": len(lectures),
+        "total_count": len(all_lectures),
         "top_categories": top_categories,
         "other_categories": other_categories,
         "current_category": category,
-    }
-
-    return render(request, "lectures.html", context)
+    })
 
 
 # =====================================================
@@ -178,4 +140,5 @@ def lectures_view(request: HttpRequest) -> HttpResponse:
 # =====================================================
 
 def contact_view(request: HttpRequest) -> HttpResponse:
+    # contact links context_processor orqali keladi
     return render(request, "contact.html")

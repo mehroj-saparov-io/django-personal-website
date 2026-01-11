@@ -11,7 +11,8 @@
             About Me
         </h1>
         <p class="text-lg text-slate-600 max-w-2xl">
-            A short overview of who I am, what I do, and what I care about professionally.
+            A brief introduction to my background, education, interests,
+            and the path I am building as a backend developer.
         </p>
         <div class="decorative-line mt-6"></div>
     </div>
@@ -22,8 +23,14 @@
         <div>
             <h2 class="text-2xl font-semibold mb-4">Background</h2>
             <p class="text-slate-700 leading-relaxed">
-                I'm Mehroj Saparov, a backend-focused software developer with a strong interest
-                in building clean, scalable, and maintainable systems.
+                My name is Mehroj Saparov. I was born in 2004 in Samarkand, Uzbekistan.
+                I am currently a bachelor’s student at Samarkand Institute of
+                Economy and Service (2023–2027), majoring in Finance on a government scholarship.
+                <br><br>
+                Alongside my university studies, I am actively pursuing a career in software
+                development. Since August 2025, I have been studying as a
+                Django Backend Developer at Najot Ta’lim, where I focus on
+                building practical backend systems and strengthening my engineering mindset.
             </p>
         </div>
 
@@ -40,30 +47,58 @@
             </div>
         </div>
 
-
         <!-- Values -->
         <div>
-            <h2 class="text-2xl font-semibold mb-4">What I Value</h2>
+            <h2 class="text-2xl font-semibold mb-4">Interests & Values</h2>
             <ul class="space-y-3 text-slate-700">
-                <li>• Clean architecture and readable code</li>
-                <li>• Long-term maintainability over shortcuts</li>
-                <li>• Continuous learning and knowledge sharing</li>
-                <li>• Solving real problems with simple solutions</li>
+                <li>• Strong interest in problem-solving and mathematical thinking</li>
+                <li>• Writing clean, readable, and maintainable backend code</li>
+                <li>• Continuous learning through practice and real projects</li>
+                <li>• Balancing technical growth with personal discipline</li>
             </ul>
         </div>
 
         <!-- Links -->
         <div>
             <h2 class="text-2xl font-semibold mb-4">Find Me Online</h2>
-            <div class="flex flex-wrap gap-4">
-                <a href="https://github.com/mehroj-saparov-io"
-                   target="_blank"
-                   class="text-slate-700 hover:text-slate-900 underline-offset-4 hover:underline">
+
+            <div class="flex flex-wrap gap-3">
+
+                {% if contact.github %}
+                <a href="{{ contact.github }}" target="_blank"
+                   class="skill-tag px-4 py-2 rounded-lg text-sm font-medium">
                     GitHub
                 </a>
-                <a href="#" class="hover:underline">LinkedIn</a>
-                <a href="#" class="hover:underline">X / Twitter</a>
-                <a href="#" class="hover:underline">Telegram</a>
+                {% endif %}
+
+                {% if contact.linkedin %}
+                <a href="{{ contact.linkedin }}" target="_blank"
+                   class="skill-tag px-4 py-2 rounded-lg text-sm font-medium">
+                    LinkedIn
+                </a>
+                {% endif %}
+
+                {% if contact.twitter %}
+                <a href="{{ contact.twitter }}" target="_blank"
+                   class="skill-tag px-4 py-2 rounded-lg text-sm font-medium">
+                    X / Twitter
+                </a>
+                {% endif %}
+
+                {% if contact.telegram %}
+                <a href="{{ contact.telegram }}" target="_blank"
+                   class="skill-tag px-4 py-2 rounded-lg text-sm font-medium">
+                    Telegram
+                </a>
+                {% endif %}
+
+                {% if contact.email %}
+                <a href="mailto:{{ contact.email }}"
+                   class="skill-tag px-4 py-2 rounded-lg text-sm font-medium">
+                    Email
+                </a>
+                {% endif %}
+
             </div>
         </div>
 

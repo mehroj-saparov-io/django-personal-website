@@ -16,18 +16,31 @@
 
         {% for project in projects %}
         <a href="{{ project.url }}" target="_blank"
-           class="flex items-center gap-4 p-5 rounded-xl border hover:border-[var(--accent)] transition"
-           style="border-color: var(--border); background-color: var(--bg-soft);">
+           class="
+              group flex items-center gap-4 p-5 rounded-xl border
+              transition-all duration-200
+              hover:-translate-y-1
+           "
+           style="
+              border-color: var(--border);
+              background-color: var(--bg-soft);
+           ">
 
             <!-- Logo -->
-            <div class="w-12 h-12 rounded-lg flex items-center justify-center text-xl"
+            <div class="
+                w-12 h-12 rounded-lg flex items-center justify-center text-xl
+                transition
+                group-hover:scale-110
+            "
                  style="background-color: var(--border);">
                 🧩
             </div>
 
             <!-- Info -->
             <div>
-                <h3 class="font-semibold">{{ project.name }}</h3>
+                <h3 class="font-semibold transition group-hover:text-[var(--accent)]">
+                    {{ project.name }}
+                </h3>
                 <p class="text-sm text-[var(--text-muted)]">
                     View on GitHub →
                 </p>
