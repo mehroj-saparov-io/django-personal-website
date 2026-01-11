@@ -18,11 +18,9 @@
 
     <title>{% block title %}Mehroj Saparov{% endblock %}</title>
 
-    <!-- Tailwind + Alpine -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -57,54 +55,21 @@
         .font-display {
             font-family: 'DM Serif Display', serif;
         }
-
-        .skill-tag {
-            display: inline-flex;
-            align-items: center;
-            background: #eef0f1;
-            color: #334155;
-            transition: all 0.2s ease;
-        }
-
-        .skill-tag:hover {
-            transform: scale(1.05);
-            background: #2563eb;
-            color: #ffffff;
-        }
-
-        .card-hover {
-            transition: all 0.25s ease;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-2px);
-            background-color: #2563eb;
-            color: #ffffff;
-        }
-
-        .card-hover:hover p {
-            color: #e0e7ff;
-        }
-
     </style>
 </head>
 
 <body class="overflow-x-hidden">
 
-<!-- NAVBAR -->
 <header class="fixed top-0 w-full z-50 border-b backdrop-blur"
         style="background-color: var(--bg); border-color: var(--border);">
 
     <div class="max-w-6xl mx-auto px-4">
         <div class="flex items-center justify-between h-16">
 
-            <!-- Logo -->
             <a href="{% url 'home' %}" class="font-display text-xl font-bold">
                 Mehroj<span class="text-[var(--accent)]">.</span>
             </a>
 
-
-            <!-- Desktop nav -->
             <nav class="hidden md:flex items-center gap-6 text-[var(--text-muted)]">
                 <a href="{% url 'home' %}" class="hover:text-[var(--accent)]">Home</a>
                 <a href="{% url 'about' %}" class="hover:text-[var(--accent)]">About</a>
@@ -116,18 +81,67 @@
                 <button @click="toggleTheme"
                         class="ml-2 p-2 rounded-lg border"
                         style="border-color: var(--border);">
-                    <span x-show="!dark">🌙</span>
-                    <span x-show="dark">☀️</span>
+
+                    <svg x-show="!dark"
+                         class="w-5 h-5"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 1v2M12 21v2
+                                 M4.22 4.22l1.42 1.42
+                                 M18.36 18.36l1.42 1.42
+                                 M1 12h2M21 12h2
+                                 M4.22 19.78l1.42-1.42
+                                 M18.36 5.64l1.42-1.42"/>
+                    </svg>
+
+                    <svg x-show="dark"
+                         class="w-5 h-5"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M21 12.79A9 9 0 1111.21 3
+                                 a7 7 0 009.79 9.79z"/>
+                    </svg>
                 </button>
             </nav>
 
-            <!-- Mobile -->
             <div class="md:hidden flex items-center gap-3">
                 <button @click="toggleTheme"
                         class="p-2 rounded-lg border"
                         style="border-color: var(--border);">
-                    <span x-show="!dark">🌙</span>
-                    <span x-show="dark">☀️</span>
+
+                    <svg x-show="!dark"
+                         class="w-5 h-5"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 1v2M12 21v2
+                                 M4.22 4.22l1.42 1.42
+                                 M18.36 18.36l1.42 1.42
+                                 M1 12h2M21 12h2
+                                 M4.22 19.78l1.42-1.42
+                                 M18.36 5.64l1.42-1.42"/>
+                    </svg>
+
+                    <svg x-show="dark"
+                         class="w-5 h-5"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M21 12.79A9 9 0 1111.21 3
+                                 a7 7 0 009.79 9.79z"/>
+                    </svg>
                 </button>
 
                 <button @click="open = !open">
@@ -143,7 +157,6 @@
         </div>
     </div>
 
-    <!-- Mobile menu -->
     <div x-show="open" x-transition @click.outside="open=false"
          class="md:hidden border-t"
          style="background-color: var(--bg-soft); border-color: var(--border);">
@@ -159,13 +172,10 @@
     </div>
 </header>
 
-<!-- MAIN -->
 <main class="pt-24 max-w-3xl mx-auto px-4">
     {% block content %}{% endblock %}
 </main>
 
-<!-- FOOTER -->
-<!-- FOOTER -->
 <footer class="mt-20 border-t"
         style="background-color: var(--bg-soft); border-color: var(--border);">
 
@@ -173,7 +183,6 @@
                 flex flex-col gap-6
                 md:flex-row md:items-center md:justify-between">
 
-        <!-- LEFT -->
         <div class="text-center md:text-left">
             <h3 class="font-display text-lg mb-2">
                 Mehroj Saparov
@@ -183,38 +192,22 @@
             </p>
         </div>
 
-        <!-- RIGHT LINKS -->
         <div class="flex justify-center md:justify-end gap-6 text-sm text-[var(--text-muted)]">
-
             {% if contact.github %}
-            <a href="{{ contact.github }}"
-               target="_blank"
-               class="hover:text-[var(--accent)] transition">
-                GitHub
-            </a>
+            <a href="{{ contact.github }}" target="_blank"
+               class="hover:text-[var(--accent)] transition">GitHub</a>
             {% endif %}
-
             {% if contact.linkedin %}
-            <a href="{{ contact.linkedin }}"
-               target="_blank"
-               class="hover:text-[var(--accent)] transition">
-                LinkedIn
-            </a>
+            <a href="{{ contact.linkedin }}" target="_blank"
+               class="hover:text-[var(--accent)] transition">LinkedIn</a>
             {% endif %}
-
             {% if contact.email %}
             <a href="mailto:{{ contact.email }}"
-               class="hover:text-[var(--accent)] transition">
-                Email
-            </a>
+               class="hover:text-[var(--accent)] transition">Email</a>
             {% elif contact.telegram %}
-            <a href="{{ contact.telegram }}"
-               target="_blank"
-               class="hover:text-[var(--accent)] transition">
-                Telegram
-            </a>
+            <a href="{{ contact.telegram }}" target="_blank"
+               class="hover:text-[var(--accent)] transition">Telegram</a>
             {% endif %}
-
         </div>
     </div>
 

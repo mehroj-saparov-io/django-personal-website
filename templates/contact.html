@@ -3,35 +3,99 @@
 
 {% block content %}
 
-<section class="space-y-8">
+<section class="space-y-10">
 
     <header>
         <h1 class="font-display text-4xl mb-2">Contact</h1>
-        <p class="text-[var(--text-muted)]">
-            Feel free to reach out via any platform below.
+        <p class="text-[var(--text-muted)] max-w-xl">
+            Feel free to reach out through any of the platforms below.
         </p>
     </header>
 
     <div class="space-y-4">
 
-        <div class="border rounded-xl p-5"
-             style="border-color: var(--border); background-color: var(--bg-soft);">
-            📧 Email: <span class="text-[var(--text-muted)]">mehroj@example.com</span>
-        </div>
+        {% if contact.email %}
+        <a href="mailto:{{ contact.email }}"
+           class="group block border rounded-xl p-5 transition
+                  hover:border-[var(--accent)]"
+           style="border-color: var(--border); background-color: var(--bg-soft);">
 
-        <div class="border rounded-xl p-5"
-             style="border-color: var(--border); background-color: var(--bg-soft);">
-            💬 Telegram: <a href="#" class="text-[var(--accent)]">@username</a>
-        </div>
+            <div class="flex items-center gap-4">
+                <svg class="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--accent)] transition"
+                     fill="none" stroke="currentColor" stroke-width="1.8"
+                     viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M4 6h16v12H4z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M4 6l8 6 8-6"/>
+                </svg>
 
-        <div class="border rounded-xl p-5"
-             style="border-color: var(--border); background-color: var(--bg-soft);">
-            💼 GitHub: <a href="https://github.com/mehroj-saparov-io"
-                         target="_blank"
-                         class="text-[var(--accent)]">
-                mehroj-saparov-io
-            </a>
-        </div>
+                <span class="text-sm">
+                    {{ contact.email }}
+                </span>
+            </div>
+        </a>
+        {% endif %}
+
+        {% if contact.telegram %}
+        <a href="{{ contact.telegram }}"
+           target="_blank"
+           class="group block border rounded-xl p-5 transition
+                  hover:border-[var(--accent)]"
+           style="border-color: var(--border); background-color: var(--bg-soft);">
+
+            <div class="flex items-center gap-4">
+                <svg class="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--accent)] transition"
+                     fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9.993 15.5l-.396 5.573c.567 0 .813-.244 1.109-.536l2.664-2.535 5.523 4.03c1.013.558 1.732.264 1.985-.938L24 2.547c.318-1.478-.537-2.053-1.523-1.688L1.114 9.71c-1.456.567-1.435 1.37-.249 1.736l5.588 1.741L19.393 5.8c.612-.4 1.17-.18.712.221"/>
+                </svg>
+
+                <span class="text-sm">
+                    Telegram
+                </span>
+            </div>
+        </a>
+        {% endif %}
+
+        {% if contact.github %}
+        <a href="{{ contact.github }}"
+           target="_blank"
+           class="group block border rounded-xl p-5 transition
+                  hover:border-[var(--accent)]"
+           style="border-color: var(--border); background-color: var(--bg-soft);">
+
+            <div class="flex items-center gap-4">
+                <svg class="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--accent)] transition"
+                     fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.11 3.29 9.44 7.86 10.97.58.11.79-.25.79-.56v-2.02c-3.2.7-3.88-1.55-3.88-1.55-.53-1.35-1.29-1.71-1.29-1.71-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.72-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.27 1.19-3.07-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.17a11.07 11.07 0 012.9-.39c.98 0 1.97.13 2.9.39 2.2-1.48 3.17-1.17 3.17-1.17.64 1.6.24 2.78.12 3.07.74.8 1.18 1.82 1.18 3.07 0 4.41-2.69 5.38-5.25 5.66.41.35.77 1.04.77 2.1v3.11c0 .31.21.68.8.56A11.53 11.53 0 0023.5 12C23.5 5.74 18.27.5 12 .5z"/>
+                </svg>
+
+                <span class="text-sm">
+                    GitHub
+                </span>
+            </div>
+        </a>
+        {% endif %}
+
+        {% if contact.linkedin %}
+        <a href="{{ contact.linkedin }}"
+           target="_blank"
+           class="group block border rounded-xl p-5 transition
+                  hover:border-[var(--accent)]"
+           style="border-color: var(--border); background-color: var(--bg-soft);">
+
+            <div class="flex items-center gap-4">
+                <svg class="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--accent)] transition"
+                     fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M4.98 3.5a2.48 2.48 0 110 4.96 2.48 2.48 0 010-4.96zM2 9h6v13H2zM9.5 9h5.7v1.78h.08c.79-1.5 2.72-3.08 5.6-3.08 6 0 7.1 3.95 7.1 9.1V22h-6v-6.3c0-1.5-.03-3.43-2.09-3.43-2.1 0-2.42 1.63-2.42 3.32V22h-6z"/>
+                </svg>
+
+                <span class="text-sm">
+                    LinkedIn
+                </span>
+            </div>
+        </a>
+        {% endif %}
 
     </div>
 

@@ -4,20 +4,16 @@
 {% block content %}
 
 <section class="space-y-10">
-
-    <!-- HEADER -->
     <header class="space-y-4">
         <h1 class="font-display text-4xl">Lectures</h1>
 
         <div class="flex flex-wrap items-center gap-4 text-sm text-[var(--text-muted)]">
 
-            <!-- ALL -->
             <a href="{% url 'lectures' %}"
                class="{% if not current_category %}text-[var(--accent)] font-medium{% endif %}">
                 {{ total_count }} Lectures
             </a>
 
-            <!-- TOP CATEGORIES -->
             {% for name, count in top_categories %}
                 <a href="?category={{ name }}"
                    class="{% if current_category == name %}text-[var(--accent)] font-medium{% endif %}">
@@ -25,7 +21,6 @@
                 </a>
             {% endfor %}
 
-            <!-- OTHERS -->
             {% if other_categories %}
             <button
                 onclick="toggleOthers()"
@@ -35,7 +30,6 @@
             {% endif %}
         </div>
 
-        <!-- OTHER CATEGORIES PANEL -->
         {% if other_categories %}
         <div id="otherCategories"
              class="hidden mt-4 p-4 border rounded-xl
@@ -57,14 +51,12 @@
         {% endif %}
     </header>
 
-    <!-- GRID -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 
         {% for lecture in page_obj %}
         <div class="border rounded-xl overflow-hidden"
              style="border-color: var(--border); background-color: var(--bg-soft);">
 
-            <!-- VIDEO CARD -->
             <button
                 onclick="openVideo('{{ lecture.youtube_id }}')"
                 class="relative w-full group">
@@ -81,7 +73,6 @@
                 </div>
             </button>
 
-            <!-- INFO -->
             <div class="p-4 space-y-2">
                 <h3 class="font-medium">
                     {{ lecture.id }}. {{ lecture.title }}
@@ -103,7 +94,6 @@
 
     </div>
 
-    <!-- PAGINATION -->
     <div class="flex justify-center items-center gap-4 pt-8 text-sm">
 
         {% if page_obj.has_previous %}
@@ -128,7 +118,6 @@
 
 </section>
 
-<!-- ================= MODAL ================= -->
 <div id="videoModal"
      class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
 
@@ -159,7 +148,6 @@
     </div>
 </div>
 
-<!-- ================= SCRIPT ================= -->
 <script>
 function toggleOthers() {
     const el = document.getElementById("otherCategories");
