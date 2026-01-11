@@ -44,16 +44,24 @@
         <div class="border rounded-xl overflow-hidden"
              style="border-color: var(--border); background-color: var(--bg-soft);">
 
-            <a href="https://www.youtube.com/watch?v={{ lecture.youtube_id }}"
-               target="_blank">
+            <!-- VIDEO CARD -->
+            <button
+                onclick="openVideo('{{ lecture.youtube_id }}')"
+                class="relative w-full group">
 
                 <img
-                  src="https://img.youtube.com/vi/{{ lecture.youtube_id }}/hqdefault.jpg"
-                  alt="{{ lecture.title }}"
-                  class="w-full aspect-video object-cover"
+                    src="https://img.youtube.com/vi/{{ lecture.youtube_id }}/hqdefault.jpg"
+                    alt="{{ lecture.title }}"
+                    class="w-full aspect-video object-cover"
                 >
-            </a>
 
+                <div class="absolute inset-0 flex items-center justify-center bg-black/40
+                            opacity-0 group-hover:opacity-100 transition">
+                    <span class="text-white text-5xl">▶</span>
+                </div>
+            </button>
+
+            <!-- INFO -->
             <div class="p-4">
                 <h3 class="font-medium mb-1">
                     {{ lecture.id }}. {{ lecture.title }}
@@ -62,6 +70,7 @@
                     {{ lecture.category }}
                 </p>
             </div>
+
         </div>
         {% endfor %}
 
@@ -69,7 +78,6 @@
 
     <!-- PAGINATION -->
     <div class="flex justify-center items-center gap-4 pt-8 text-sm">
-
         {% if page_obj.has_previous %}
             <a href="?page={{ page_obj.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}">
                 ← Back
@@ -88,9 +96,57 @@
                 Next →
             </a>
         {% endif %}
-
     </div>
 
 </section>
+
+<!-- ================= MODAL ================= -->
+<div id="videoModal"
+     class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
+
+    <div class="relative w-full max-w-xl mx-4 bg-[#0f0f0f] rounded-xl p-6 text-white">
+
+        <button
+            onclick="closeVideo()"
+            class="absolute top-3 right-3 text-2xl">
+            ✕
+        </button>
+
+        <h2 class="text-lg font-semibold mb-2">
+            Video YouTube’da ochiladi
+        </h2>
+
+        <p class="text-sm text-gray-400 mb-4">
+            To‘liq player, kanal, kommentlar va sifat uchun video YouTube’da ochiladi.
+        </p>
+
+        <a id="youtubeLink"
+           href="#"
+           target="_blank"
+           class="block w-full text-center py-3 rounded-lg
+                  bg-red-600 hover:bg-red-700 transition font-medium">
+            ▶ YouTube’da ko‘rish
+        </a>
+
+    </div>
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+function openVideo(videoId) {
+    const modal = document.getElementById('videoModal');
+    const link = document.getElementById('youtubeLink');
+
+    link.href = `https://www.youtube.com/watch?v=${videoId}`;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function closeVideo() {
+    const modal = document.getElementById('videoModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+}
+</script>
 
 {% endblock %}

@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block title %}Home | Mehroj Saparov{% endblock %}
 
 {% block content %}
@@ -66,12 +65,14 @@
 
     <div class="space-y-6">
         {% for blog in latest_blogs %}
-        <a href="{% url 'blog_detail' blog.id %}"
+        <a href="{% url 'blog_detail' slug=blog.slug %}"
            class="block p-5 rounded-lg border hover:bg-[var(--bg-soft)] transition"
            style="border-color: var(--border);">
+
             <h3 class="text-lg font-medium mb-1">
                 {{ blog.title }}
             </h3>
+
             <p class="text-sm text-[var(--text-muted)]">
                 {{ blog.excerpt }}
             </p>
