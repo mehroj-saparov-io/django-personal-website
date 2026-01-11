@@ -1,9 +1,15 @@
+import os
+
 import requests
 import json
 from django.core.cache import cache
+from dotenv import load_dotenv
 
-GITHUB_BASE_URL = "https://raw.githubusercontent.com/mehroj-saparov-io/data/main"
-CACHE_TIMEOUT = 300
+load_dotenv()
+
+GITHUB_BASE_URL = os.getenv('GITHUB_BASE_URL')
+# 1 kunda ma'lumot yangilanishi uchun 86400 sekund qilib qo'ydim
+CACHE_TIMEOUT = int(os.getenv('CACHE_TIMEOUT', 86400))
 
 
 def load_github_txt(filename: str):

@@ -5,10 +5,6 @@ from django.core.paginator import Paginator
 from core.services.github import get_data, load_github_html
 
 
-# =====================================================
-# HOME
-# =====================================================
-
 def home_view(request: HttpRequest) -> HttpResponse:
     skills = get_data("skills.txt")
 
@@ -20,11 +16,6 @@ def home_view(request: HttpRequest) -> HttpResponse:
         "latest_blogs": latest_blogs,
     })
 
-
-# =====================================================
-# BLOG LIST
-# =====================================================
-
 def blog_view(request: HttpRequest) -> HttpResponse:
     blogs = get_data("blogs.txt")
 
@@ -35,11 +26,6 @@ def blog_view(request: HttpRequest) -> HttpResponse:
     return render(request, "blog.html", {
         "blogs": page_obj
     })
-
-
-# =====================================================
-# BLOG DETAIL
-# =====================================================
 
 def blog_detail_view(request: HttpRequest, slug: str) -> HttpResponse:
     blogs = get_data("blogs.txt")
@@ -63,22 +49,12 @@ def blog_detail_view(request: HttpRequest, slug: str) -> HttpResponse:
         "blog_content": blog_content
     })
 
-
-# =====================================================
-# ABOUT
-# =====================================================
-
 def about_view(request: HttpRequest) -> HttpResponse:
     skills = get_data("skills.txt")
 
     return render(request, "about.html", {
         "skills": skills
     })
-
-
-# =====================================================
-# PROJECTS
-# =====================================================
 
 def projects_view(request: HttpRequest) -> HttpResponse:
     projects = get_data("projects.txt")
@@ -87,16 +63,11 @@ def projects_view(request: HttpRequest) -> HttpResponse:
         "projects": projects
     })
 
-
-# =====================================================
-# LECTURES
-# =====================================================
-
 def lectures_view(request: HttpRequest) -> HttpResponse:
     all_lectures = get_data("lectures.txt")
     category = request.GET.get("category")
 
-    # ---------- FILTER ----------
+    # filter by category
     lectures = all_lectures
     if category:
         lectures = [
@@ -106,12 +77,12 @@ def lectures_view(request: HttpRequest) -> HttpResponse:
             ]
         ]
 
-    # ---------- PAGINATION ----------
+    # pagination
     paginator = Paginator(lectures, 6)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    # ---------- CATEGORY COUNTS ----------
+    # categories count
     categories = {}
     for lecture in all_lectures:
         for cat in lecture.get("category", []):
@@ -133,11 +104,6 @@ def lectures_view(request: HttpRequest) -> HttpResponse:
         "other_categories": other_categories,
         "current_category": category,
     })
-
-
-# =====================================================
-# CONTACT
-# =====================================================
 
 def contact_view(request: HttpRequest) -> HttpResponse:
     # contact links context_processor orqali keladi
