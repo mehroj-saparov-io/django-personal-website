@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Lectures – Mehroj Saparov{% endblock %}
+
+{% block content %}
+
+<section class="space-y-10">
+
+    <!-- HEADER -->
+    <header>
+        <h1 class="font-display text-4xl mb-2">Lectures</h1>
+
+        <div class="flex flex-wrap gap-4 text-sm text-[var(--text-muted)] mt-4">
+            <a href="{% url 'lectures' %}"
+               class="{% if not current_category %}text-[var(--accent)]{% endif %}">
+                {{ total_count }} Lectures
+            </a>
+
+            {% for name, count in top_categories %}
+                <a href="?category={{ name }}"
+                   class="{% if current_category == name %}text-[var(--accent)]{% endif %}">
+                    {{ count }} {{ name }}
+                </a>
+            {% endfor %}
+
+            {% if other_categories %}
+            <details>
+                <summary class="cursor-pointer">Others</summary>
+                <div class="flex flex-col mt-2 gap-2">
+                    {% for name, count in other_categories %}
+                        <a href="?category={{ name }}">
+                            {{ count }} {{ name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </details>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- GRID -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+        {% for lecture in page_obj %}
+        <div class="border rounded-xl overflow-hidden"
+             style="border-color: var(--border); background-color: var(--bg-soft);">
+
+            <a href="https://www.youtube.com/watch?v={{ lecture.youtube_id }}"
+               target="_blank">
+
+                <img
+                  src="https://img.youtube.com/vi/{{ lecture.youtube_id }}/hqdefault.jpg"
+                  alt="{{ lecture.title }}"
+                  class="w-full aspect-video object-cover"
+                >
+            </a>
+
+            <div class="p-4">
+                <h3 class="font-medium mb-1">
+                    {{ lecture.id }}. {{ lecture.title }}
+                </h3>
+                <p class="text-xs text-[var(--text-muted)]">
+                    {{ lecture.category }}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="flex justify-center items-center gap-4 pt-8 text-sm">
+
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}">
+                ← Back
+            </a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            <a href="?page={{ num }}{% if current_category %}&category={{ current_category }}{% endif %}"
+               class="{% if page_obj.number == num %}font-bold text-[var(--accent)]{% endif %}">
+                {{ num }}
+            </a>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}">
+                Next →
+            </a>
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

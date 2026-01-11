@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Mehroj Saparov{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="mb-20">
+    <h1 class="font-display text-4xl md:text-5xl mb-4">
+        Hi, I’m Mehroj 👋
+    </h1>
+    <p class="text-lg text-[var(--text-muted)] max-w-xl">
+        Backend Developer focused on building scalable systems with Python,
+        Django and clean architecture principles.
+    </p>
+
+    <div class="mt-6 flex flex-wrap gap-4">
+        <a href="{% url 'projects' %}"
+           class="px-5 py-2.5 rounded-lg bg-[var(--accent)] text-white hover:opacity-90 transition">
+            View Projects
+        </a>
+        <a href="{% url 'blog' %}"
+           class="px-5 py-2.5 rounded-lg border hover:bg-[var(--bg-soft)] transition"
+           style="border-color: var(--border);">
+            Read Blog
+        </a>
+    </div>
+</section>
+
+<!-- ABOUT PREVIEW -->
+<section class="mb-20">
+    <h2 class="font-display text-2xl mb-4">About me</h2>
+    <p class="text-[var(--text-muted)] max-w-2xl">
+        I’m a backend developer with a passion for designing reliable,
+        maintainable systems. I write about backend development, Python,
+        and real-world engineering practices.
+    </p>
+    <a href="{% url 'about' %}"
+       class="inline-block mt-4 text-[var(--accent)] hover:underline">
+        Learn more →
+    </a>
+</section>
+
+<!-- SKILLS -->
+<section class="mb-20">
+    <h2 class="font-display text-2xl mb-6">Tech stack</h2>
+
+    <div class="flex flex-wrap gap-3">
+        {% for skill in skills %}
+            <span class="px-3 py-1.5 text-sm rounded-full border
+                         hover:bg-[var(--accent)] hover:text-white transition"
+                  style="border-color: var(--border);">
+                {{ skill }}
+            </span>
+        {% empty %}
+            <p class="text-[var(--text-muted)] text-sm">
+                Skills will be added soon.
+            </p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- LATEST BLOG POSTS -->
+<section class="mb-20">
+    <h2 class="font-display text-2xl mb-6">Latest writing</h2>
+
+    <div class="space-y-6">
+        {% for blog in latest_blogs %}
+        <a href="{% url 'blog_detail' blog.id %}"
+           class="block p-5 rounded-lg border hover:bg-[var(--bg-soft)] transition"
+           style="border-color: var(--border);">
+            <h3 class="text-lg font-medium mb-1">
+                {{ blog.title }}
+            </h3>
+            <p class="text-sm text-[var(--text-muted)]">
+                {{ blog.excerpt }}
+            </p>
+        </a>
+        {% empty %}
+        <p class="text-sm text-[var(--text-muted)]">
+            Blog posts will appear here soon.
+        </p>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'blog' %}"
+       class="inline-block mt-6 text-[var(--accent)] hover:underline">
+        View all posts →
+    </a>
+</section>
+
+<!-- CTA -->
+<section class="text-center mb-10">
+    <h2 class="font-display text-2xl mb-4">
+        Let’s work together
+    </h2>
+    <p class="text-[var(--text-muted)] mb-6">
+        Have an idea or project in mind? I’m open to collaboration.
+    </p>
+    <a href="{% url 'contact' %}"
+       class="px-6 py-3 rounded-lg bg-[var(--accent)] text-white hover:opacity-90 transition">
+        Contact me
+    </a>
+</section>
+
+{% endblock %}

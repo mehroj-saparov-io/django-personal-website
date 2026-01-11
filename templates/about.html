@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}About – Mehroj Saparov{% endblock %}
+
+{% block content %}
+<section class="max-w-4xl mx-auto px-4 pt-28 pb-20">
+
+    <!-- Header -->
+    <div class="mb-14">
+        <h1 class="text-4xl font-bold tracking-tight mb-4">
+            About Me
+        </h1>
+        <p class="text-lg text-slate-600 max-w-2xl">
+            A short overview of who I am, what I do, and what I care about professionally.
+        </p>
+        <div class="decorative-line mt-6"></div>
+    </div>
+
+    <div class="space-y-14">
+
+        <!-- Background -->
+        <div>
+            <h2 class="text-2xl font-semibold mb-4">Background</h2>
+            <p class="text-slate-700 leading-relaxed">
+                I'm Mehroj Saparov, a backend-focused software developer with a strong interest
+                in building clean, scalable, and maintainable systems.
+            </p>
+        </div>
+
+        <!-- Skills -->
+        <div>
+            <h2 class="text-2xl font-semibold mb-4">Skills & Tools</h2>
+
+            <div class="flex flex-wrap gap-3">
+                {% for skill in skills %}
+                    <span class="skill-tag px-4 py-2 rounded-lg text-sm font-medium">
+                        {{ skill }}
+                    </span>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <!-- Values -->
+        <div>
+            <h2 class="text-2xl font-semibold mb-4">What I Value</h2>
+            <ul class="space-y-3 text-slate-700">
+                <li>• Clean architecture and readable code</li>
+                <li>• Long-term maintainability over shortcuts</li>
+                <li>• Continuous learning and knowledge sharing</li>
+                <li>• Solving real problems with simple solutions</li>
+            </ul>
+        </div>
+
+        <!-- Links -->
+        <div>
+            <h2 class="text-2xl font-semibold mb-4">Find Me Online</h2>
+            <div class="flex flex-wrap gap-4">
+                <a href="https://github.com/mehroj-saparov-io"
+                   target="_blank"
+                   class="text-slate-700 hover:text-slate-900 underline-offset-4 hover:underline">
+                    GitHub
+                </a>
+                <a href="#" class="hover:underline">LinkedIn</a>
+                <a href="#" class="hover:underline">X / Twitter</a>
+                <a href="#" class="hover:underline">Telegram</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

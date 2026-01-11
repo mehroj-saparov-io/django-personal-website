@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Contact – Mehroj Saparov{% endblock %}
+
+{% block content %}
+
+<section class="space-y-8">
+
+    <header>
+        <h1 class="font-display text-4xl mb-2">Contact</h1>
+        <p class="text-[var(--text-muted)]">
+            Feel free to reach out via any platform below.
+        </p>
+    </header>
+
+    <div class="space-y-4">
+
+        <div class="border rounded-xl p-5"
+             style="border-color: var(--border); background-color: var(--bg-soft);">
+            📧 Email: <span class="text-[var(--text-muted)]">mehroj@example.com</span>
+        </div>
+
+        <div class="border rounded-xl p-5"
+             style="border-color: var(--border); background-color: var(--bg-soft);">
+            💬 Telegram: <a href="#" class="text-[var(--accent)]">@username</a>
+        </div>
+
+        <div class="border rounded-xl p-5"
+             style="border-color: var(--border); background-color: var(--bg-soft);">
+            💼 GitHub: <a href="https://github.com/mehroj-saparov-io"
+                         target="_blank"
+                         class="text-[var(--accent)]">
+                mehroj-saparov-io
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

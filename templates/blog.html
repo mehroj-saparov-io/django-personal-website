@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Blog – Mehroj Saparov{% endblock %}
+
+{% block content %}
+
+<section class="space-y-10">
+
+    <!-- Header -->
+    <header>
+        <h1 class="font-display text-4xl mb-3">Blog</h1>
+        <p class="text-[var(--text-muted)] max-w-2xl">
+            Thoughts and articles about backend development, Django and software architecture.
+        </p>
+    </header>
+
+    <!-- Articles -->
+    <div class="space-y-8">
+        {% for blog in blogs %}
+        <article class="border rounded-xl p-6 hover:border-[var(--accent)] transition"
+                 style="border-color: var(--border); background-color: var(--bg-soft);">
+
+            <div class="flex flex-col gap-3">
+
+                <div class="text-sm text-[var(--text-muted)]">
+                    {{ blog.published_date }} · {{ blog.reading_time }}
+                </div>
+
+                <h2 class="text-2xl font-display hover:text-[var(--accent)] transition">
+                    <a href="{% url 'blog_detail' blog.id %}">
+                        {{ blog.title }}
+                    </a>
+                </h2>
+
+                <p class="text-[var(--text-muted)] leading-relaxed">
+                    {{ blog.excerpt }}
+                </p>
+
+                <div class="flex gap-2 flex-wrap pt-2">
+                    {% for tag in blog.tags %}
+                    <span class="px-3 py-1 text-xs rounded-lg"
+                          style="background-color: var(--border);">
+                        {{ tag }}
+                    </span>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </article>
+        {% empty %}
+        <p class="text-sm text-[var(--text-muted)]">
+            No articles yet.
+        </p>
+        {% endfor %}
+    </div>
+
+    <!-- Classic Article Pagination -->
+    {% if blogs.has_previous or blogs.has_next %}
+    <div class="pt-16 flex justify-between items-center text-sm text-[var(--text-muted)]">
+
+        {% if blogs.has_previous %}
+            <a href="?page={{ blogs.previous_page_number }}"
+               class="hover:text-[var(--accent)] transition">
+                ← Previous articles
+            </a>
+        {% else %}
+            <span></span>
+        {% endif %}
+
+        {% if blogs.has_next %}
+            <a href="?page={{ blogs.next_page_number }}"
+               class="hover:text-[var(--accent)] transition">
+                Next articles →
+            </a>
+        {% endif %}
+
+    </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}

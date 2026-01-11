@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en"
+      x-data="{
+        open: false,
+        dark: localStorage.getItem('theme') === 'dark',
+        toggleTheme() {
+            this.dark = !this.dark;
+            localStorage.setItem('theme', this.dark ? 'dark' : 'light');
+        }
+      }"
+      x-bind:class="{ 'dark': dark }"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Personal website, blog and portfolio of Mehroj Saparov, Backend Developer">
+
+    <title>{% block title %}Mehroj Saparov{% endblock %}</title>
+
+    <!-- Tailwind + Alpine -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Work+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-soft: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --accent: #6366f1;
+            --border: #e2e8f0;
+        }
+
+        .dark {
+            --bg: #020617;
+            --bg-soft: #020617;
+            --text-main: #e5e7eb;
+            --text-muted: #94a3b8;
+            --accent: #818cf8;
+            --border: #1e293b;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .font-display {
+            font-family: 'DM Serif Display', serif;
+        }
+
+        .skill-tag {
+            background: #eef0f1;
+            color: #334155;
+            transition: all 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            transform: scale(1.05);
+            background: #2563eb;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body class="overflow-x-hidden">
+
+<!-- NAVBAR -->
+<header class="fixed top-0 w-full z-50 border-b backdrop-blur"
+        style="background-color: var(--bg); border-color: var(--border);">
+
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+
+            <!-- Logo -->
+            <a href="{% url 'home' %}" class="font-display text-xl font-bold">
+                Mehroj.dev
+            </a>
+
+            <!-- Desktop nav -->
+            <nav class="hidden md:flex items-center gap-6 text-[var(--text-muted)]">
+                <a href="{% url 'home' %}" class="hover:text-[var(--accent)]">Home</a>
+                <a href="{% url 'about' %}" class="hover:text-[var(--accent)]">About</a>
+                <a href="{% url 'blog' %}" class="hover:text-[var(--accent)]">Blog</a>
+                <a href="{% url 'lectures' %}" class="hover:text-[var(--accent)]">Lectures</a>
+                <a href="{% url 'projects' %}" class="hover:text-[var(--accent)]">Projects</a>
+                <a href="{% url 'contact' %}" class="hover:text-[var(--accent)]">Contact</a>
+
+                <!-- Theme toggle -->
+                <button @click="toggleTheme"
+                        class="ml-2 p-2 rounded-lg border hover:bg-[var(--bg-soft)] transition"
+                        style="border-color: var(--border);">
+                    <span x-show="!dark">🌙</span>
+                    <span x-show="dark">☀️</span>
+                </button>
+            </nav>
+
+            <!-- Mobile buttons -->
+            <div class="md:hidden flex items-center gap-3">
+                <button @click="toggleTheme"
+                        class="p-2 rounded-lg border"
+                        style="border-color: var(--border);">
+                    <span x-show="!dark">🌙</span>
+                    <span x-show="dark">☀️</span>
+                </button>
+
+                <button @click="open = !open">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div x-show="open"
+         x-transition
+         @click.outside="open=false"
+         class="md:hidden border-t"
+         style="background-color: var(--bg-soft); border-color: var(--border);">
+
+        <nav class="flex flex-col px-4 py-4 space-y-3 text-[var(--text-muted)]">
+            <a href="{% url 'home' %}" @click="open=false">Home</a>
+            <a href="{% url 'about' %}" @click="open=false">About</a>
+            <a href="{% url 'blog' %}" @click="open=false">Blog</a>
+            <a href="{% url 'lectures' %}" @click="open=false">Lectures</a>
+            <a href="{% url 'projects' %}" @click="open=false">Projects</a>
+            <a href="{% url 'contact' %}" @click="open=false">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<!-- MAIN -->
+<main class="pt-24 max-w-3xl mx-auto px-4">
+    {% block content %}{% endblock %}
+</main>
+
+<!-- FOOTER -->
+<footer class="mt-20 border-t"
+        style="background-color: var(--bg-soft); border-color: var(--border);">
+
+    <div class="max-w-6xl mx-auto px-4 py-10
+                flex flex-col gap-6
+                md:flex-row md:items-center md:justify-between">
+
+        <div class="text-center md:text-left">
+            <h3 class="font-display text-lg mb-2">
+                Mehroj Saparov
+            </h3>
+            <p class="text-sm text-[var(--text-muted)] max-w-md mx-auto md:mx-0">
+                Backend Developer. Writing about Python, backend systems and clean architecture.
+            </p>
+        </div>
+
+        <div class="flex justify-center md:justify-end gap-5 text-[var(--text-muted)]">
+            <a href="https://github.com/mehroj-saparov-io"
+               target="_blank"
+               class="hover:text-[var(--accent)]">GitHub</a>
+            <a href="#" class="hover:text-[var(--accent)]">LinkedIn</a>
+            <a href="#" class="hover:text-[var(--accent)]">Twitter</a>
+        </div>
+    </div>
+
+    <div class="text-center text-sm text-[var(--text-muted)] pb-6">
+        © 2026 Mehroj Saparov
+    </div>
+</footer>
+
+</body>
+</html>

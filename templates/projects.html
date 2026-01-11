@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Projects – Mehroj Saparov{% endblock %}
+
+{% block content %}
+
+<section class="space-y-8">
+
+    <header>
+        <h1 class="font-display text-4xl mb-2">Projects</h1>
+        <p class="text-[var(--text-muted)]">
+            Selected personal and open-source projects.
+        </p>
+    </header>
+
+    <div class="space-y-4">
+
+        {% for project in projects %}
+        <a href="{{ project.url }}" target="_blank"
+           class="flex items-center gap-4 p-5 rounded-xl border hover:border-[var(--accent)] transition"
+           style="border-color: var(--border); background-color: var(--bg-soft);">
+
+            <!-- Logo -->
+            <div class="w-12 h-12 rounded-lg flex items-center justify-center text-xl"
+                 style="background-color: var(--border);">
+                🧩
+            </div>
+
+            <!-- Info -->
+            <div>
+                <h3 class="font-semibold">{{ project.name }}</h3>
+                <p class="text-sm text-[var(--text-muted)]">
+                    View on GitHub →
+                </p>
+            </div>
+
+        </a>
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}
