@@ -70,13 +70,44 @@
                 Mehroj<span class="text-[var(--accent)]">.</span>
             </a>
 
+            {% with request.resolver_match.url_name as active %}
             <nav class="hidden md:flex items-center gap-6 text-[var(--text-muted)]">
-                <a href="{% url 'home' %}" class="hover:text-[var(--accent)]">Home</a>
-                <a href="{% url 'about' %}" class="hover:text-[var(--accent)]">About</a>
-                <a href="{% url 'blog' %}" class="hover:text-[var(--accent)]">Blog</a>
-                <a href="{% url 'lectures' %}" class="hover:text-[var(--accent)]">Lectures</a>
-                <a href="{% url 'projects' %}" class="hover:text-[var(--accent)]">Projects</a>
-                <a href="{% url 'contact' %}" class="hover:text-[var(--accent)]">Contact</a>
+
+                <a href="{% url 'home' %}"
+                   class="transition hover:text-[var(--accent)]
+                          {% if active == 'home' %}text-[var(--accent)] font-semibold{% endif %}">
+                    Home
+                </a>
+
+                <a href="{% url 'about' %}"
+                   class="transition hover:text-[var(--accent)]
+                          {% if active == 'about' %}text-[var(--accent)] font-semibold{% endif %}">
+                    About
+                </a>
+
+                <a href="{% url 'blog' %}"
+                   class="transition hover:text-[var(--accent)]
+                          {% if active == 'blog' %}text-[var(--accent)] font-semibold{% endif %}">
+                    Blog
+                </a>
+
+                <a href="{% url 'lectures' %}"
+                   class="transition hover:text-[var(--accent)]
+                          {% if active == 'lectures' %}text-[var(--accent)] font-semibold{% endif %}">
+                    Lectures
+                </a>
+
+                <a href="{% url 'projects' %}"
+                   class="transition hover:text-[var(--accent)]
+                          {% if active == 'projects' %}text-[var(--accent)] font-semibold{% endif %}">
+                    Projects
+                </a>
+
+                <a href="{% url 'contact' %}"
+                   class="transition hover:text-[var(--accent)]
+                          {% if active == 'contact' %}text-[var(--accent)] font-semibold{% endif %}">
+                    Contact
+                </a>
 
                 <button @click="toggleTheme"
                         class="ml-2 p-2 rounded-lg border"
@@ -110,38 +141,12 @@
                     </svg>
                 </button>
             </nav>
+            {% endwith %}
 
             <div class="md:hidden flex items-center gap-3">
                 <button @click="toggleTheme"
                         class="p-2 rounded-lg border"
                         style="border-color: var(--border);">
-
-                    <svg x-show="!dark"
-                         class="w-5 h-5"
-                         fill="none"
-                         stroke="currentColor"
-                         stroke-width="1.8"
-                         viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="5"/>
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M12 1v2M12 21v2
-                                 M4.22 4.22l1.42 1.42
-                                 M18.36 18.36l1.42 1.42
-                                 M1 12h2M21 12h2
-                                 M4.22 19.78l1.42-1.42
-                                 M18.36 5.64l1.42-1.42"/>
-                    </svg>
-
-                    <svg x-show="dark"
-                         class="w-5 h-5"
-                         fill="none"
-                         stroke="currentColor"
-                         stroke-width="1.8"
-                         viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M21 12.79A9 9 0 1111.21 3
-                                 a7 7 0 009.79 9.79z"/>
-                    </svg>
                 </button>
 
                 <button @click="open = !open">
@@ -157,19 +162,46 @@
         </div>
     </div>
 
+    {% with request.resolver_match.url_name as active %}
     <div x-show="open" x-transition @click.outside="open=false"
          class="md:hidden border-t"
          style="background-color: var(--bg-soft); border-color: var(--border);">
 
         <nav class="flex flex-col px-4 py-4 space-y-3 text-[var(--text-muted)]">
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'about' %}">About</a>
-            <a href="{% url 'blog' %}">Blog</a>
-            <a href="{% url 'lectures' %}">Lectures</a>
-            <a href="{% url 'projects' %}">Projects</a>
-            <a href="{% url 'contact' %}">Contact</a>
+
+            <a href="{% url 'home' %}"
+               class="{% if active == 'home' %}text-[var(--accent)] font-semibold{% endif %}">
+                Home
+            </a>
+
+            <a href="{% url 'about' %}"
+               class="{% if active == 'about' %}text-[var(--accent)] font-semibold{% endif %}">
+                About
+            </a>
+
+            <a href="{% url 'blog' %}"
+               class="{% if active == 'blog' %}text-[var(--accent)] font-semibold{% endif %}">
+                Blog
+            </a>
+
+            <a href="{% url 'lectures' %}"
+               class="{% if active == 'lectures' %}text-[var(--accent)] font-semibold{% endif %}">
+                Lectures
+            </a>
+
+            <a href="{% url 'projects' %}"
+               class="{% if active == 'projects' %}text-[var(--accent)] font-semibold{% endif %}">
+                Projects
+            </a>
+
+            <a href="{% url 'contact' %}"
+               class="{% if active == 'contact' %}text-[var(--accent)] font-semibold{% endif %}">
+                Contact
+            </a>
+
         </nav>
     </div>
+    {% endwith %}
 </header>
 
 <main class="pt-24 max-w-3xl mx-auto px-4">

@@ -17,7 +17,6 @@
     </div>
 
     <div class="space-y-14">
-
         <div>
             <h2 class="text-2xl font-semibold mb-4">Background</h2>
             <p class="text-slate-700 leading-relaxed">
@@ -35,12 +34,24 @@
         <div>
             <h2 class="text-2xl font-semibold mb-4">Skills & Tools</h2>
 
-            <div class="flex flex-wrap gap-3">
+            <div class="flex flex-wrap gap-4">
+
                 {% for skill in skills %}
-                    <span class="skill-tag px-4 py-2 rounded-lg text-sm font-medium">
+                <div
+                    class="
+                        group px-4 py-3 rounded-xl border
+                        transition-all duration-200
+                        hover:-translate-y-1
+                    "
+                    style="border-color: var(--border); background-color: var(--bg-soft);">
+
+                    <span class="text-sm font-medium
+                                 transition group-hover:text-[var(--accent)]">
                         {{ skill }}
                     </span>
+                </div>
                 {% endfor %}
+
             </div>
         </div>
 
@@ -57,40 +68,80 @@
         <div>
             <h2 class="text-2xl font-semibold mb-4">Find Me Online</h2>
 
-            <div class="flex flex-wrap gap-3">
+            <div class="flex flex-wrap gap-4">
 
                 {% if contact.github %}
                 <a href="{{ contact.github }}" target="_blank"
-                   class="skill-tag px-4 py-2 rounded-lg text-sm font-medium">
-                    GitHub
+                   class="
+                      group px-4 py-3 rounded-xl border
+                      transition-all duration-200
+                      hover:-translate-y-1
+                   "
+                   style="border-color: var(--border); background-color: var(--bg-soft);">
+                    <span class="text-sm font-medium
+                                 transition group-hover:text-[var(--accent)]">
+                        GitHub
+                    </span>
                 </a>
                 {% endif %}
 
                 {% if contact.linkedin %}
                 <a href="{{ contact.linkedin }}" target="_blank"
-                   class="skill-tag px-4 py-2 rounded-lg text-sm font-medium">
-                    LinkedIn
+                   class="
+                      group px-4 py-3 rounded-xl border
+                      transition-all duration-200
+                      hover:-translate-y-1
+                   "
+                   style="border-color: var(--border); background-color: var(--bg-soft);">
+                    <span class="text-sm font-medium
+                                 transition group-hover:text-[var(--accent)]">
+                        LinkedIn
+                    </span>
                 </a>
                 {% endif %}
 
                 {% if contact.twitter %}
                 <a href="{{ contact.twitter }}" target="_blank"
-                   class="skill-tag px-4 py-2 rounded-lg text-sm font-medium">
-                    X / Twitter
+                   class="
+                      group px-4 py-3 rounded-xl border
+                      transition-all duration-200
+                      hover:-translate-y-1
+                   "
+                   style="border-color: var(--border); background-color: var(--bg-soft);">
+                    <span class="text-sm font-medium
+                                 transition group-hover:text-[var(--accent)]">
+                        X / Twitter
+                    </span>
                 </a>
                 {% endif %}
 
                 {% if contact.telegram %}
                 <a href="{{ contact.telegram }}" target="_blank"
-                   class="skill-tag px-4 py-2 rounded-lg text-sm font-medium">
-                    Telegram
+                   class="
+                      group px-4 py-3 rounded-xl border
+                      transition-all duration-200
+                      hover:-translate-y-1
+                   "
+                   style="border-color: var(--border); background-color: var(--bg-soft);">
+                    <span class="text-sm font-medium
+                                 transition group-hover:text-[var(--accent)]">
+                        Telegram
+                    </span>
                 </a>
                 {% endif %}
 
                 {% if contact.email %}
                 <a href="mailto:{{ contact.email }}"
-                   class="skill-tag px-4 py-2 rounded-lg text-sm font-medium">
-                    Email
+                   class="
+                      group px-4 py-3 rounded-xl border
+                      transition-all duration-200
+                      hover:-translate-y-1
+                   "
+                   style="border-color: var(--border); background-color: var(--bg-soft);">
+                    <span class="text-sm font-medium
+                                 transition group-hover:text-[var(--accent)]">
+                        Email
+                    </span>
                 </a>
                 {% endif %}
 
